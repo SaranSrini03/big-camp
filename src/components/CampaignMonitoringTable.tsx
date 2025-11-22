@@ -1,0 +1,289 @@
+import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Checkbox,
+} from "@mui/material";
+import { FiHelpCircle, FiChevronDown, FiExternalLink } from "react-icons/fi";
+import SummaryCards, { SummaryCard } from "./SummaryCards";
+
+export interface CampaignMonitoring {
+  id: number;
+  name: string;
+  username: string;
+  initials: string;
+  postLink: string;
+  noOfPosts: number;
+  audience: number;
+  reach: number;
+  likes: number;
+  costPerEngagement: string;
+  engagement: string;
+  campaignSpend: number;
+  conversionRate: string;
+  roi: string;
+}
+
+interface CampaignMonitoringTableProps {
+  data: CampaignMonitoring[];
+  summaryCards?: SummaryCard[];
+  onCheckboxChange?: (id: number, checked: boolean) => void;
+  onPostLinkClick?: (id: number) => void;
+}
+
+export default function CampaignMonitoringTable({
+  data,
+  summaryCards,
+  onCheckboxChange,
+  onPostLinkClick,
+}: CampaignMonitoringTableProps) {
+  const getInitialsColor = (initials: string) => {
+    const colors = [
+      "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
+      "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
+    ];
+    return colors[initials.charCodeAt(0) % colors.length];
+  };
+
+  const getInitialsTextColor = (initials: string) => {
+    const colors = [
+      "#3730A3", "#1E40AF", "#065F46", "#92400E", "#9F1239",
+      "#3730A3", "#1E40AF", "#065F46", "#92400E", "#9F1239",
+    ];
+    return colors[initials.charCodeAt(0) % colors.length];
+  };
+
+  const tableHeaders = [
+    "Name",
+    "Post Link",
+    "No of Posts",
+    "Audience",
+    "Reach",
+    "Likes",
+    "Cost per Engagement",
+    "Engagement",
+    "Campaign Spend",
+    "Conversion Rate (%)",
+    "ROI (%)",
+  ];
+
+  return (
+    <div>
+      {/* Summary Cards */}
+      {summaryCards && summaryCards.length > 0 && (
+        <SummaryCards cards={summaryCards} />
+      )}
+
+      {/* Table */}
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
+        <Table sx={{ minWidth: 650 }} size="small">
+          <TableHead>
+            <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    whiteSpace: "nowrap",
+                    borderBottom: "1px solid #e5e7eb",
+                    backgroundColor: "#f9fafc",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    {header}
+                    {header !== "Name" && header !== "Post Link" && header !== "No of Posts" && (
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    )}
+                    {header === "Post Link" && (
+                      <FiChevronDown className="text-gray-400" size={14} />
+                    )}
+                  </div>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{
+                  borderBottom: "1px solid #f3f4f6",
+                  "&:hover": { backgroundColor: "#f9fafb" },
+                }}
+              >
+                <TableCell padding="checkbox" sx={{ borderBottom: "1px solid #f3f4f6" }}>
+                  <Checkbox
+                    size="small"
+                    onChange={(e) => onCheckboxChange?.(row.id, e.target.checked)}
+                  />
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div
+                      style={{
+                        width: "36px",
+                        height: "36px",
+                        borderRadius: "50%",
+                        backgroundColor: getInitialsColor(row.initials),
+                        color: getInitialsTextColor(row.initials),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {row.initials}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, color: "#111827", marginBottom: "2px", fontSize: "0.875rem" }}>
+                        {row.name}
+                      </div>
+                      <div style={{ fontSize: "0.6875rem", color: "#6b7280" }}>
+                        {row.username}
+                      </div>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 1,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#2563eb",
+                    borderBottom: "1px solid #f3f4f6",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => onPostLinkClick?.(row.id)}
+                >
+                  {row.postLink === "Link" ? (
+                    <span style={{ textDecoration: "underline" }}>{row.postLink}</span>
+                  ) : (
+                    row.postLink
+                  )}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.noOfPosts}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.audience.toLocaleString()}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.reach.toLocaleString()}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.likes.toLocaleString()}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.costPerEngagement}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.engagement}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.campaignSpend.toLocaleString()}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.conversionRate}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.roi}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
+}
+
