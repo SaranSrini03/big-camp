@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -10,6 +10,9 @@ import {
   Checkbox,
 } from "@mui/material";
 import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
+import TablePagination from "./TablePagination";
+import GradientButton from "@/components/buttons/GradientButton";
+import SetBudgetModal, { BudgetFormData } from "@/components/ui/SetBudgetModal";
 
 export interface BudgetAllocation {
   id: number;
@@ -35,6 +38,11 @@ export default function BudgetAllocationsTable({
   onBudgetSet,
   onCheckboxChange,
 }: BudgetAllocationsTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
+  const [selectedAllocation, setSelectedAllocation] = useState<BudgetAllocation | null>(null);
+
   const getInitialsColor = (initials: string) => {
     const colors = [
       "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
@@ -61,40 +69,81 @@ export default function BudgetAllocationsTable({
     "Budget",
   ];
 
+  const paginatedAllocations = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return allocations.slice(startIndex, endIndex);
+  }, [allocations, page]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const handleBudgetSetClick = (allocation: BudgetAllocation) => {
+    setSelectedAllocation(allocation);
+    setIsBudgetModalOpen(true);
+    onBudgetSet?.(allocation.id);
+  };
+
+  const handleBudgetModalClose = () => {
+    setIsBudgetModalOpen(false);
+    setSelectedAllocation(null);
+  };
+
+  const handleSave = (formData: BudgetFormData) => {
+    // Handle save logic here
+    console.log("Budget saved:", formData);
+    // You can add API call here to update the budget
+    handleBudgetModalClose();
+  };
+
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead>
-          <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
-            {tableHeaders.map((header, index) => (
+    <div>
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
+        <Table sx={{ minWidth: 650 }} size="small">
+          <TableHead>
+            <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
               <TableCell
-                key={index}
                 sx={{
                   py: 2,
                   px: 2,
                   fontSize: "0.8125rem",
                   fontWeight: 500,
                   color: "#374151",
-                  whiteSpace: "nowrap",
                   borderBottom: "1px solid #e5e7eb",
                   backgroundColor: "#f9fafc",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  {header}
-                  {header !== "Budget" && header !== "Name" && (
-                    <FiHelpCircle className="text-gray-400" size={14} />
-                  )}
-                  {header === "Budget" && (
-                    <FiChevronDown className="text-gray-400" size={14} />
-                  )}
-                </div>
               </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {allocations.map((allocation) => (
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    whiteSpace: "nowrap",
+                    borderBottom: "1px solid #e5e7eb",
+                    backgroundColor: "#f9fafc",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    {header}
+                    {header !== "Budget" && header !== "Name" && (
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    )}
+                    {header === "Budget" && (
+                      <FiChevronDown className="text-gray-400" size={14} />
+                    )}
+                  </div>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedAllocations.map((allocation) => (
             <TableRow
               key={allocation.id}
               sx={{
@@ -207,34 +256,39 @@ export default function BudgetAllocationsTable({
                   borderBottom: "1px solid #f3f4f6",
                 }}
               >
-                <button
-                  onClick={() => onBudgetSet?.(allocation.id)}
-                  style={{
-                    backgroundColor: "#10b981",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "6px",
-                    padding: "6px 16px",
-                    fontSize: "0.8125rem",
-                    fontWeight: 500,
-                    cursor: "pointer",
-                    transition: "background-color 0.2s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = "#059669";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "#10b981";
-                  }}
-                >
-                  {allocation.budget ? `$${allocation.budget.toLocaleString()}` : "Set a budget"}
-                </button>
+                <GradientButton
+                  label={allocation.budget ? `$${allocation.budget.toLocaleString()}` : "Set a budget"}
+                  onClick={() => handleBudgetSetClick(allocation)}
+                  className="px-4 py-1.5 text-sm rounded-lg"
+                  colors="bg-[#10b981] hover:bg-[#059669] text-white"
+                />
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {allocations.length > rowsPerPage && (
+        <TablePagination
+          count={allocations.length}
+          page={page}
+          onChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+        />
+      )}
+      <SetBudgetModal
+        isOpen={isBudgetModalOpen}
+        onClose={handleBudgetModalClose}
+        onSave={handleSave}
+        budgetData={{
+          cpp: selectedAllocation?.cpp,
+          cps: selectedAllocation?.cps,
+          cpvid: selectedAllocation?.cpvid,
+          performanceHike: selectedAllocation?.performanceHike,
+          budget: selectedAllocation?.budget,
+        }}
+      />
+    </div>
   );
 }
 

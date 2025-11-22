@@ -1,16 +1,16 @@
 import React from "react";
 import { useRouter } from "next/router";
-import CampaignSidebar from "@/components/CampaignSidebar";
-import CampaignHero from "@/components/CampaignHero";
-import GradientButton from "@/components/GradientButton";
-import InfluencersTable from "@/components/InfluencersTable";
-import ProductContentTable from "@/components/ProductContentTable";
-import BudgetAllocationsTable from "@/components/BudgetAllocationsTable";
-import TermsAndConditions from "@/components/TermsAndConditions";
-import ProductSendingTable from "@/components/ProductSendingTable";
-import ReviewTable from "@/components/ReviewTable";
-import CampaignMonitoringTable from "@/components/CampaignMonitoringTable";
-import PaymentManagementTable from "@/components/PaymentManagementTable";
+import CampaignSidebar from "@/components/campaign/CampaignSidebar";
+import CampaignHero from "@/components/campaign/CampaignHero";
+import GradientButton from "@/components/buttons/GradientButton";
+import InfluencersTable from "@/components/tables/InfluencersTable";
+import ProductContentTable from "@/components/tables/ProductContentTable";
+import BudgetAllocationsTable from "@/components/tables/BudgetAllocationsTable";
+import TermsAndConditions from "@/components/campaign/TermsAndConditions";
+import ProductSendingTable from "@/components/tables/ProductSendingTable";
+import ReviewTable from "@/components/tables/ReviewTable";
+import CampaignMonitoringTable from "@/components/tables/CampaignMonitoringTable";
+import PaymentManagementTable from "@/components/tables/PaymentManagementTable";
 import { influencersData, productContentData, budgetAllocationsData, productSendingData, reviewData, campaignMonitoringData, campaignMonitoringCards, paymentManagementData, paymentManagementCards, sectionTitles } from "@/data/alldata";
 
 export default function CampaignSection() {

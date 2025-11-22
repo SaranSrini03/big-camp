@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -10,7 +10,10 @@ import {
   Checkbox,
 } from "@mui/material";
 import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
-import SummaryCards, { SummaryCard } from "./SummaryCards";
+import SummaryCards, { SummaryCard } from "@/components/ui/SummaryCards";
+import TablePagination from "./TablePagination";
+import GradientButton from "@/components/buttons/GradientButton";
+import PaymentModal from "@/components/ui/PaymentModal";
 
 export interface PaymentManagement {
   id: number;
@@ -39,6 +42,11 @@ export default function PaymentManagementTable({
   onCheckboxChange,
   onPay,
 }: PaymentManagementTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState<PaymentManagement | null>(null);
+
   const getInitialsColor = (initials: string) => {
     const colors = [
       "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
@@ -67,18 +75,59 @@ export default function PaymentManagementTable({
     "Payment",
   ];
 
-  return (
-    <div>
-      {/* Summary Cards */}
-      {summaryCards && summaryCards.length > 0 && (
-        <SummaryCards cards={summaryCards} />
-      )}
+  const paginatedData = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  }, [data, page]);
 
-      {/* Table */}
-      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const handlePayClick = (row: PaymentManagement) => {
+    setSelectedPayment(row);
+    setIsPaymentModalOpen(true);
+    onPay?.(row.id);
+  };
+
+  const handlePaymentModalClose = () => {
+    setIsPaymentModalOpen(false);
+    setSelectedPayment(null);
+  };
+
+  const handlePaymentSubmit = (paymentData: any) => {
+    // Handle payment submission here
+    console.log("Payment submitted:", paymentData);
+    // You can add API call here
+    handlePaymentModalClose();
+  };
+
+  return (
+    <>
+      <div>
+        {/* Summary Cards */}
+        {summaryCards && summaryCards.length > 0 && (
+          <SummaryCards cards={summaryCards} />
+        )}
+
+        {/* Table */}
+        <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
         <Table sx={{ minWidth: 650 }} size="small">
           <TableHead>
             <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              <TableCell
+                sx={{
+                  py: 2,
+                  px: 2,
+                  fontSize: "0.8125rem",
+                  fontWeight: 500,
+                  color: "#374151",
+                  borderBottom: "1px solid #e5e7eb",
+                  backgroundColor: "#f9fafc",
+                }}
+              >
+              </TableCell>
               {tableHeaders.map((header, index) => (
                 <TableCell
                   key={index}
@@ -107,7 +156,7 @@ export default function PaymentManagementTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
+            {paginatedData.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{
@@ -274,35 +323,39 @@ export default function PaymentManagementTable({
                     borderBottom: "1px solid #f3f4f6",
                   }}
                 >
-                  <button
-                    onClick={() => onPay?.(row.id)}
-                    style={{
-                      backgroundColor: "#10b981",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      padding: "6px 20px",
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      transition: "background-color 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#059669";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "#10b981";
-                    }}
-                  >
-                    Pay
-                  </button>
+                  <GradientButton
+                    label="Pay"
+                    onClick={() => handlePayClick(row)}
+                    className="px-5 py-1.5 text-sm rounded-lg"
+                    colors="bg-[#10b981] hover:bg-[#059669] text-white"
+                  />
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {data.length > rowsPerPage && (
+          <TablePagination
+            count={data.length}
+            page={page}
+            onChange={handlePageChange}
+            rowsPerPage={rowsPerPage}
+          />
+        )}
+      </div>
+      <PaymentModal
+        isOpen={isPaymentModalOpen}
+        onClose={handlePaymentModalClose}
+        onPayment={handlePaymentSubmit}
+        paymentData={{
+          name: selectedPayment?.name,
+          accountNumber: "11234567899",
+          ifscCode: "123545",
+          upi: "11234567899",
+        }}
+      />
+    </>
   );
 }
 

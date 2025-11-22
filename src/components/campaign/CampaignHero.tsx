@@ -1,5 +1,5 @@
 import React from "react";
-import SearchAndSortControls from "@/components/SearchAndSortControls";
+import SearchAndSortControls from "@/components/ui/SearchAndSortControls";
 
 interface CampaignHeroProps {
   campaignName?: string;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,8 @@ import {
   Paper,
 } from "@mui/material";
 import { FiHelpCircle, FiChevronDown, FiExternalLink } from "react-icons/fi";
+import TablePagination from "./TablePagination";
+import SetProductModal from "@/components/ui/SetProductModal";
 
 export interface ProductContent {
   id: number;
@@ -26,9 +28,16 @@ export interface ProductContent {
 
 interface ProductContentTableProps {
   data: ProductContent[];
+  onEdit?: (id: number) => void;
 }
 
-export default function ProductContentTable({ data }: ProductContentTableProps) {
+export default function ProductContentTable({ data, onEdit }: ProductContentTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+
+  const [selectedProduct, setSelectedProduct] = useState<ProductContent | null>(null);
+
   const getInitialsColor = (initials: string) => {
     const colors = [
       "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
@@ -45,35 +54,66 @@ export default function ProductContentTable({ data }: ProductContentTableProps) 
     return colors[initials.charCodeAt(0) % colors.length];
   };
 
+  const paginatedData = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  }, [data, page]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+
+  const handleEditClick = (item: ProductContent) => {
+    setSelectedProduct(item);
+    setIsProductModalOpen(true);
+    onEdit?.(item.id);
+  };
+
+  const handleProductModalClose = () => {
+    setIsProductModalOpen(false);
+    setSelectedProduct(null);
+  };
+
+
+  const handleSave = (formData: any) => {
+    // Handle save logic here
+    console.log("Product updated:", formData);
+    // You can add API call here to update the product
+    handleProductModalClose();
+  };
+
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead>
-          <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
-            <TableCell
-              sx={{
-                py: 2,
-                px: 2,
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                color: "#374151",
-                borderBottom: "1px solid #e5e7eb",
-                backgroundColor: "#f9fafc",
-              }}
-            ></TableCell>
-            <TableCell
-              sx={{
-                py: 2,
-                px: 2,
-                fontSize: "0.8125rem",
-                fontWeight: 500,
-                color: "#374151",
-                borderBottom: "1px solid #e5e7eb",
-                backgroundColor: "#f9fafc",
-              }}
-            >
-              Name
-            </TableCell>
+    <div>
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
+        <Table sx={{ minWidth: 650 }} size="small">
+          <TableHead>
+            <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              <TableCell
+                sx={{
+                  py: 2,
+                  px: 2,
+                  fontSize: "0.8125rem",
+                  fontWeight: 500,
+                  color: "#374151",
+                  borderBottom: "1px solid #e5e7eb",
+                  backgroundColor: "#f9fafc",
+                }}
+              ></TableCell>
+              <TableCell
+                sx={{
+                  py: 2,
+                  px: 2,
+                  fontSize: "0.8125rem",
+                  fontWeight: 500,
+                  color: "#374151",
+                  borderBottom: "1px solid #e5e7eb",
+                  backgroundColor: "#f9fafc",
+                }}
+              >
+                Name
+              </TableCell>
             <TableCell
               sx={{
                 py: 2,
@@ -186,7 +226,7 @@ export default function ProductContentTable({ data }: ProductContentTableProps) 
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((item) => (
+          {paginatedData.map((item) => (
             <TableRow
               key={item.id}
               sx={{
@@ -202,7 +242,11 @@ export default function ProductContentTable({ data }: ProductContentTableProps) 
                   borderBottom: "1px solid #f3f4f6",
                 }}
               >
-                <FiExternalLink className="text-gray-400" size={18} />
+                <FiExternalLink
+                  className="text-gray-400 hover:text-gray-600 cursor-pointer"
+                  size={18}
+                  onClick={() => handleEditClick(item)}
+                />
               </TableCell>
               <TableCell
                 sx={{
@@ -353,9 +397,30 @@ export default function ProductContentTable({ data }: ProductContentTableProps) 
                 </div>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {data.length > rowsPerPage && (
+        <TablePagination
+          count={data.length}
+          page={page}
+          onChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+        />
+      )}
+      <SetProductModal
+        isOpen={isProductModalOpen}
+        onClose={handleProductModalClose}
+        onSave={handleSave}
+        productData={{
+          productLink: selectedProduct?.productLink ? "Link" : "",
+          type: selectedProduct?.type || "11234567899",
+          noOfPost: selectedProduct?.noOfPost || 0,
+          deadline: selectedProduct?.deadline || "123545",
+          status: selectedProduct?.status || "",
+        }}
+      />
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -9,6 +9,8 @@ import {
   Paper,
 } from "@mui/material";
 import { FiDownload } from "react-icons/fi";
+import GradientButton from "@/components/buttons/GradientButton";
+import TablePagination from "./TablePagination";
 
 export interface ReviewItem {
   id: number;
@@ -33,6 +35,9 @@ export default function ReviewTable({
   onReject,
   onDownload,
 }: ReviewTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+
   const getInitialsColor = (initials: string) => {
     const colors = [
       "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
@@ -58,32 +63,43 @@ export default function ReviewTable({
     "Submitted",
   ];
 
+  const paginatedReviews = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return reviews.slice(startIndex, endIndex);
+  }, [reviews, page]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead>
-          <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
-            {tableHeaders.map((header, index) => (
-              <TableCell
-                key={index}
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  whiteSpace: "nowrap",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              >
-                {header}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {reviews.map((review) => (
+    <div>
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
+        <Table sx={{ minWidth: 650 }} size="small">
+          <TableHead>
+            <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    whiteSpace: "nowrap",
+                    borderBottom: "1px solid #e5e7eb",
+                    backgroundColor: "#f9fafc",
+                  }}
+                >
+                  {header}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedReviews.map((review) => (
             <TableRow
               key={review.id}
               sx={{
@@ -198,54 +214,24 @@ export default function ReviewTable({
                 }}
               >
                 <div style={{ display: "flex", gap: "8px" }}>
-                  <button
+                  <GradientButton
+                    label="Accept"
                     onClick={() => onAccept?.(review.id)}
-                    style={{
-                      backgroundColor: "#dc2626",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      padding: "6px 16px",
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      transition: "background-color 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#b91c1c";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "#dc2626";
-                    }}
-                  >
-                    Accept
-                  </button>
-                  <button
+                    colors="bg-[#dc2626] hover:bg-[#b91c1c] text-white"
+                    className="px-4 py-1.5 text-xs rounded-lg"
+                    width="w-auto"
+                  />
+                  <GradientButton
+                    label="Reject"
                     onClick={() => onReject?.(review.id)}
-                    style={{
-                      backgroundColor: "#dc2626",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "6px",
-                      padding: "6px 16px",
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      cursor: "pointer",
-                      transition: "background-color 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#b91c1c";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "#dc2626";
-                    }}
-                  >
-                    Reject
-                  </button>
+                    colors="bg-[#dc2626] hover:bg-[#b91c1c] text-white"
+                    className="px-4 py-1.5 text-xs rounded-lg"
+                    width="w-auto"
+                  />
                 </div>
               </TableCell>
               <TableCell
-                sx={{
+                sx={{ 
                   py: 1,
                   px: 2,
                   fontSize: "0.8125rem",
@@ -267,10 +253,17 @@ export default function ReviewTable({
                 </div>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        count={reviews.length}
+        page={page}
+        onChange={handlePageChange}
+        rowsPerPage={rowsPerPage}
+      />
+    </div>
   );
 }
 

@@ -1,12 +1,12 @@
-import { Campaign } from "@/components/CampaignsTable";
-import { Influencer } from "@/components/InfluencersTable";
-import { ProductContent } from "@/components/ProductContentTable";
-import { BudgetAllocation } from "@/components/BudgetAllocationsTable";
-import { ProductSending } from "@/components/ProductSendingTable";
-import { ReviewItem } from "@/components/ReviewTable";
-import { CampaignMonitoring } from "@/components/CampaignMonitoringTable";
-import { PaymentManagement } from "@/components/PaymentManagementTable";
-import { SummaryCard } from "@/components/SummaryCards";
+import { Campaign } from "@/components/tables/CampaignsTable";
+import { Influencer } from "@/components/tables/InfluencersTable";
+import { ProductContent } from "@/components/tables/ProductContentTable";
+import { BudgetAllocation } from "@/components/tables/BudgetAllocationsTable";
+import { ProductSending } from "@/components/tables/ProductSendingTable";
+import { ReviewItem } from "@/components/tables/ReviewTable";
+import { CampaignMonitoring } from "@/components/tables/CampaignMonitoringTable";
+import { PaymentManagement } from "@/components/tables/PaymentManagementTable";
+import { SummaryCard } from "@/components/ui/SummaryCards";
 
 // Campaigns data
 export const campaignsData: Campaign[] = [
@@ -33,6 +33,7 @@ export const influencersData: Influencer[] = [
   { id: 8, name: "Orlando Diggs", username: "@orlando", initials: "OD", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
   { id: 9, name: "Andi Lane", username: "@andi", initials: "AL", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
   { id: 10, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 11, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
 ];
 
 // Product Content data

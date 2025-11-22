@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -10,7 +10,8 @@ import {
   Checkbox,
 } from "@mui/material";
 import { FiHelpCircle, FiChevronDown, FiExternalLink } from "react-icons/fi";
-import SummaryCards, { SummaryCard } from "./SummaryCards";
+import SummaryCards, { SummaryCard } from "@/components/ui/SummaryCards";
+import TablePagination from "./TablePagination";
 
 export interface CampaignMonitoring {
   id: number;
@@ -42,6 +43,9 @@ export default function CampaignMonitoringTable({
   onCheckboxChange,
   onPostLinkClick,
 }: CampaignMonitoringTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+
   const getInitialsColor = (initials: string) => {
     const colors = [
       "#E0E7FF", "#DBEAFE", "#D1FAE5", "#FEF3C7", "#FCE7F3",
@@ -72,6 +76,16 @@ export default function CampaignMonitoringTable({
     "ROI (%)",
   ];
 
+  const paginatedData = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return data.slice(startIndex, endIndex);
+  }, [data, page]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
     <div>
       {/* Summary Cards */}
@@ -84,6 +98,18 @@ export default function CampaignMonitoringTable({
         <Table sx={{ minWidth: 650 }} size="small">
           <TableHead>
             <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              <TableCell
+                sx={{
+                  py: 2,
+                  px: 2,
+                  fontSize: "0.8125rem",
+                  fontWeight: 500,
+                  color: "#374151",
+                  borderBottom: "1px solid #e5e7eb",
+                  backgroundColor: "#f9fafc",
+                }}
+              >
+              </TableCell>
               {tableHeaders.map((header, index) => (
                 <TableCell
                   key={index}
@@ -112,7 +138,7 @@ export default function CampaignMonitoringTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
+            {paginatedData.map((row) => (
               <TableRow
                 key={row.id}
                 sx={{
@@ -279,11 +305,17 @@ export default function CampaignMonitoringTable({
                   {row.roi}
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
-  );
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          count={data.length}
+          page={page}
+          onChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+        />
+      </div>
+    );
 }
 

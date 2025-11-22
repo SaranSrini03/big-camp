@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import {
   Table,
@@ -10,6 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
+import TablePagination from "./TablePagination";
 
 export interface Campaign {
   id?: string | number;
@@ -32,6 +33,9 @@ interface CampaignsTableProps {
 }
 
 export default function CampaignsTable({ campaigns, onCampaignClick }: CampaignsTableProps) {
+  const [page, setPage] = useState(1);
+  const rowsPerPage = 10;
+
   // Helper function to create URL-friendly slug from campaign name
   const createSlug = (name: string): string => {
     return name
@@ -56,40 +60,51 @@ export default function CampaignsTable({ campaigns, onCampaignClick }: Campaigns
     "Status",
   ];
 
+  const paginatedCampaigns = useMemo(() => {
+    const startIndex = (page - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    return campaigns.slice(startIndex, endIndex);
+  }, [campaigns, page]);
+
+  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   return (
-    <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none" }}>
-      <Table sx={{ minWidth: 650 }} size="small">
-        <TableHead>
-          <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
-            {tableHeaders.map((header, index) => (
-              <TableCell
-                key={index}
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.875rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  whiteSpace: "nowrap",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  {header}
-                  {header !== "Status" && header !== "Platform" && (
-                    <FiHelpCircle className="text-gray-400" size={14} />
-                  )}
-                  {header === "Status" && (
-                    <FiChevronDown className="text-gray-400" size={14} />
-                  )}
-                </div>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {campaigns.map((campaign, index) => (
+    <div>
+      <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none" }}>
+        <Table sx={{ minWidth: 650 }} size="small">
+          <TableHead>
+            <TableRow sx={{ borderBottom: "1px solid #e5e7eb", backgroundColor: "#f9fafc" }}>
+              {tableHeaders.map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    whiteSpace: "nowrap",
+                    borderBottom: "1px solid #e5e7eb",
+                    backgroundColor: "#f9fafc",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    {header}
+                    {header !== "Status" && header !== "Platform" && (
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    )}
+                    {header === "Status" && (
+                      <FiChevronDown className="text-gray-400" size={14} />
+                    )}
+                  </div>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedCampaigns.map((campaign, index) => (
             <TableRow
               key={index}
               sx={{
@@ -296,9 +311,16 @@ export default function CampaignsTable({ campaigns, onCampaignClick }: Campaigns
                 </div>
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        count={campaigns.length}
+        page={page}
+        onChange={handlePageChange}
+        rowsPerPage={rowsPerPage}
+      />
+    </div>
   );
 }
