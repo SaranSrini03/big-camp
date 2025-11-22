@@ -1,18 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Checkbox,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown, FiTrash2 } from "react-icons/fi";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, FiHelpCircle, FiChevronDown, FiTrash2, InvitationSuccessModal, GradientButton } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
-import InvitationSuccessModal from "@/components/ui/InvitationSuccessModal";
-import GradientButton from "@/components/buttons/GradientButton";
 
 export interface Influencer {
   id: number;
@@ -285,23 +272,38 @@ export default function InfluencersTable({
                   </TableCell>
                 </>
               )}
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  Status
-                  <FiChevronDown className="text-gray-400" size={14} />
-                </div>
-              </TableCell>
               {!campaignStarted && (
+                <>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Status
+                      <FiChevronDown className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  ></TableCell>
+                </>
+              )}
+              {campaignStarted && (
                 <TableCell
                   sx={{
                     py: 2,
@@ -312,7 +314,12 @@ export default function InfluencersTable({
                     borderBottom: "1px solid #e5e7eb",
                     backgroundColor: "#f9fafc",
                   }}
-                ></TableCell>
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                    Status
+                    <FiChevronDown className="text-gray-400" size={14} />
+                  </div>
+                </TableCell>
               )}
             </TableRow>
           </TableHead>
@@ -498,6 +505,43 @@ export default function InfluencersTable({
                       borderBottom: "1px solid #f3f4f6",
                     }}
                   >
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "4px 12px",
+                        borderRadius: "12px",
+                        backgroundColor: influencer.status === "Ongoing" ? "#d1fae5" : "#d1fae5",
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          backgroundColor: "#10b981",
+                        }}
+                      />
+                      <span
+                        style={{
+                          color: "#065f46",
+                          fontSize: "0.75rem",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {influencer.status === "Ongoing" ? "Ongoing" : influencer.status}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
                     <FiTrash2
                       onClick={() => onDelete?.(influencer.id)}
                       className="text-gray-400 hover:text-red-500 cursor-pointer"
@@ -506,43 +550,45 @@ export default function InfluencersTable({
                   </TableCell>
                 </>
               )}
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  borderBottom: "1px solid #f3f4f6",
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "4px 12px",
-                    borderRadius: "12px",
-                    backgroundColor: influencer.status === "Ongoing" ? "#d1fae5" : "#d1fae5",
+              {campaignStarted && (
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    borderBottom: "1px solid #f3f4f6",
                   }}
                 >
-                  <span
+                  <div
                     style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      backgroundColor: "#10b981",
-                    }}
-                  />
-                  <span
-                    style={{
-                      color: "#065f46",
-                      fontSize: "0.75rem",
-                      fontWeight: 500,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "4px 12px",
+                      borderRadius: "12px",
+                      backgroundColor: influencer.status === "Ongoing" ? "#d1fae5" : "#d1fae5",
                     }}
                   >
-                    {influencer.status === "Ongoing" ? "Ongoing" : influencer.status}
-                  </span>
-                </div>
-              </TableCell>
+                    <span
+                      style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        backgroundColor: "#10b981",
+                      }}
+                    />
+                    <span
+                      style={{
+                        color: "#065f46",
+                        fontSize: "0.75rem",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {influencer.status === "Ongoing" ? "Ongoing" : influencer.status}
+                    </span>
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
             ))}
           </TableBody>

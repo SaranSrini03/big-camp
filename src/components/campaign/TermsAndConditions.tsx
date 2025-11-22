@@ -1,5 +1,4 @@
-import React from "react";
-import { FiExternalLink } from "react-icons/fi";
+import React, { FiExternalLink } from "@/imports/globalimport";
 
 interface TermsAndConditionsProps {
   brandName?: string;

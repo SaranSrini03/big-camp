@@ -1,19 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Checkbox,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
-import SummaryCards, { SummaryCard } from "@/components/ui/SummaryCards";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, FiHelpCircle, FiChevronDown, SummaryCards, SummaryCard, GradientButton, PaymentModal } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
-import GradientButton from "@/components/buttons/GradientButton";
-import PaymentModal from "@/components/ui/PaymentModal";
 
 export interface PaymentManagement {
   id: number;

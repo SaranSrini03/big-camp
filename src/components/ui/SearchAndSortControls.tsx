@@ -1,5 +1,4 @@
-import React from "react";
-import { FiSearch, FiChevronDown } from "react-icons/fi";
+import React, { FiSearch, FiChevronDown } from "@/imports/globalimport";
 
 interface SearchAndSortControlsProps {
   onSearchChange?: (value: string) => void;

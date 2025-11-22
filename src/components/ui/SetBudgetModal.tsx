@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import GradientButton from "@/components/buttons/GradientButton";
-import { FiX } from "react-icons/fi";
+import React, { useState, useEffect, FiX, GradientButton } from "@/imports/globalimport";
 
 interface SetBudgetModalProps {
   isOpen: boolean;

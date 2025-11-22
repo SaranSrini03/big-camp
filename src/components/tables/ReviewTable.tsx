@@ -1,15 +1,4 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import { FiDownload } from "react-icons/fi";
-import GradientButton from "@/components/buttons/GradientButton";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FiDownload, GradientButton } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
 
 export interface ReviewItem {

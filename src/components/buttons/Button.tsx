@@ -1,4 +1,4 @@
-import React from "react";
+import React from "@/imports/globalimport";
 
 interface ButtonProps {
   children: React.ReactNode;

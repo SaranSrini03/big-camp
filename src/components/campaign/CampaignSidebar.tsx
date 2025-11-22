@@ -1,17 +1,4 @@
-import React from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { IconType } from "react-icons";
-import {
-  FiUsers,
-  FiSettings,
-  FiDollarSign,
-  FiFileText,
-  FiPackage,
-  FiCode,
-  FiCheckCircle,
-  FiCreditCard,
-} from "react-icons/fi";
+import React, { Link, useRouter, IconType, FiUsers, FiSettings, FiDollarSign, FiFileText, FiPackage, FiCode, FiCheckCircle, FiCreditCard } from "@/imports/globalimport";
 
 interface MenuItem {
   id: string;

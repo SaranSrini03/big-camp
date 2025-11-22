@@ -1,5 +1,4 @@
-import React from "react";
-import { FiMoreVertical } from "react-icons/fi";
+import React, { FiMoreVertical } from "@/imports/globalimport";
 
 export interface SummaryCard {
   id: string;

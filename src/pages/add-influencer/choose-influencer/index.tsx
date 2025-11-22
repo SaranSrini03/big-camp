@@ -1,8 +1,4 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { FiArrowLeft } from "react-icons/fi";
-import SearchAndSortControls from "@/components/ui/SearchAndSortControls";
-import InfluencerDiscoveryTable from "@/components/tables/InfluencerDiscoveryTable";
+import React, { useRouter, FiArrowLeft, SearchAndSortControls, InfluencerDiscoveryTable } from "@/imports/globalimport";
 import { influencerDiscoveryData } from "@/data/alldata";
 
 export default function ChooseInfluencer() {

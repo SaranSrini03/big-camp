@@ -1,16 +1,4 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Checkbox,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown, FiExternalLink } from "react-icons/fi";
-import SummaryCards, { SummaryCard } from "@/components/ui/SummaryCards";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, FiHelpCircle, FiChevronDown, FiExternalLink, SummaryCards, SummaryCard } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
 
 export interface CampaignMonitoring {

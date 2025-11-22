@@ -1,15 +1,4 @@
-import React, { useState, useMemo } from "react";
-import Link from "next/link";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
+import React, { useState, useMemo, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FiHelpCircle, FiChevronDown } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
 
 export interface Campaign {

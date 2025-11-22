@@ -1,6 +1,4 @@
-import React from "react";
-import GradientButton from "@/components/buttons/GradientButton";
-import SearchAndSortControls from "@/components/ui/SearchAndSortControls";
+import React, { GradientButton, SearchAndSortControls } from "@/imports/globalimport";
 
 export default function InfluencerWelcome() {
   return (

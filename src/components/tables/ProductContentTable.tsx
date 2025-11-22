@@ -1,16 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown, FiExternalLink } from "react-icons/fi";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FiHelpCircle, FiChevronDown, FiExternalLink, SetProductModal } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
-import SetProductModal from "@/components/ui/SetProductModal";
 
 export interface ProductContent {
   id: number;

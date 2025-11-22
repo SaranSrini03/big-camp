@@ -1,12 +1,4 @@
-import { Campaign } from "@/components/tables/CampaignsTable";
-import { Influencer } from "@/components/tables/InfluencersTable";
-import { ProductContent } from "@/components/tables/ProductContentTable";
-import { BudgetAllocation } from "@/components/tables/BudgetAllocationsTable";
-import { ProductSending } from "@/components/tables/ProductSendingTable";
-import { ReviewItem } from "@/components/tables/ReviewTable";
-import { CampaignMonitoring } from "@/components/tables/CampaignMonitoringTable";
-import { PaymentManagement } from "@/components/tables/PaymentManagementTable";
-import { SummaryCard } from "@/components/ui/SummaryCards";
+import { Campaign, Influencer, ProductContent, BudgetAllocation, ProductSending, ReviewItem, CampaignMonitoring, PaymentManagement, SummaryCard } from "@/imports/globalimport";
 
 // Campaigns data
 export const campaignsData: Campaign[] = [
@@ -24,7 +16,7 @@ export const campaignsData: Campaign[] = [
 // Influencers data
 export const influencersData: Influencer[] = [
   { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
-  { id: 2, name: "Phoenix Baker", username: "@phoenix", initials: "PB", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 2, name: "Phoenix Baker", username: "@phoenix", initials: "PB", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
   { id: 3, name: "Lana Steiner", username: "@lana", initials: "LS", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
   { id: 4, name: "Demi Wilkinson", username: "@demi", initials: "DW", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
   { id: 5, name: "Candice Wu", username: "@candice", initials: "CW", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
@@ -85,13 +77,13 @@ export const reviewData: ReviewItem[] = [
 // Campaign Monitoring data
 export const campaignMonitoringData: CampaignMonitoring[] = [
   { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 3, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "₹2.50", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "7.1%", roi: "7.1%" },
-  { id: 2, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 3, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 4, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 5, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 6, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 7, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 8, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "1500", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 2, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 3, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 4, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 5, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 6, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 7, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 8, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
 ];
 
 // Campaign Monitoring Summary Cards

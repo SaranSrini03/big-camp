@@ -1,9 +1,4 @@
-import React, { useState } from "react";
-import SearchAndSortControls from "@/components/ui/SearchAndSortControls";
-import GradientButton from "@/components/buttons/GradientButton";
-import CampaignsTable from "@/components/tables/CampaignsTable";
-import { Campaign } from "@/components/tables/CampaignsTable";
-import CreateCampaignModal, { CampaignFormData } from "@/components/ui/CreateCampaignModal";
+import React, { useState, SearchAndSortControls, GradientButton, CampaignsTable, Campaign, CreateCampaignModal, CampaignFormData } from "@/imports/globalimport";
 import { campaignsData as initialCampaignsData } from "@/data/alldata";
 
 export default function AllCampaigns() {

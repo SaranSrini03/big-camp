@@ -1,6 +1,4 @@
-import React from "react";
-import { useRouter } from "next/router";
-import { FiCheck } from "react-icons/fi";
+import React, { useRouter, FiCheck } from "@/imports/globalimport";
 
 interface InfluencerAddedModalProps {
   isOpen: boolean;

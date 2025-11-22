@@ -1,6 +1,4 @@
-import Link from "next/link";
-import React from "react";
-import { FiArrowRight } from "react-icons/fi";
+import React, { Link, FiArrowRight } from "@/imports/globalimport";
 
 interface GradientButtonProps {
   href?: string; // Acts as link if provided

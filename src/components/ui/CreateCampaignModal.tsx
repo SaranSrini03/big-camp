@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import GradientButton from "@/components/buttons/GradientButton";
-import { FiX, FiChevronDown } from "react-icons/fi";
+import React, { useState, FiX, FiChevronDown, GradientButton } from "@/imports/globalimport";
 
 interface CreateCampaignModalProps {
   isOpen: boolean;

@@ -1,16 +1,4 @@
-import React from "react";
-import { useRouter } from "next/router";
-import CampaignSidebar from "@/components/campaign/CampaignSidebar";
-import CampaignHero from "@/components/campaign/CampaignHero";
-import GradientButton from "@/components/buttons/GradientButton";
-import InfluencersTable from "@/components/tables/InfluencersTable";
-import ProductContentTable from "@/components/tables/ProductContentTable";
-import BudgetAllocationsTable from "@/components/tables/BudgetAllocationsTable";
-import TermsAndConditions from "@/components/campaign/TermsAndConditions";
-import ProductSendingTable from "@/components/tables/ProductSendingTable";
-import ReviewTable from "@/components/tables/ReviewTable";
-import CampaignMonitoringTable from "@/components/tables/CampaignMonitoringTable";
-import PaymentManagementTable from "@/components/tables/PaymentManagementTable";
+import React, { useRouter, CampaignSidebar, CampaignHero, GradientButton, InfluencersTable, ProductContentTable, BudgetAllocationsTable, TermsAndConditions, ProductSendingTable, ReviewTable, CampaignMonitoringTable, PaymentManagementTable } from "@/imports/globalimport";
 import { influencersData, productContentData, budgetAllocationsData, productSendingData, reviewData, campaignMonitoringData, campaignMonitoringCards, paymentManagementData, paymentManagementCards, sectionTitles } from "@/data/alldata";
 
 export default function CampaignSection() {
@@ -19,6 +7,10 @@ export default function CampaignSection() {
 
   const title = sectionTitles[section as string] || "Campaign Detail";
   const isInfluencersSection = section === "influencers";
+  
+  // Check if all influencers have status "Accepted"
+  const allInfluencersAccepted = influencersData.length > 0 && 
+    influencersData.every(influencer => influencer.status === "Accepted");
   const isProductContentSection = section === "product-content";
   const isBudgetAllocationsSection = section === "budget-allocations";
   const isTermsConditionSection = section === "terms-condition";
@@ -42,16 +34,18 @@ export default function CampaignSection() {
           <div className="flex-1 overflow-y-auto p-6">
           {isInfluencersSection ? (
             <>
-              {/* Button */}
-              <div className="flex justify-end mb-6">
-                <GradientButton 
-                  href="/add-influencer" 
-                  label="Add influencers" 
-                  width="w-auto" 
-                  className="rounded-lg" 
-                  colors="bg-[#4094f7] hover:bg-blue-700" 
-                />
-              </div>
+              {/* Button - Hide if all influencers are Accepted */}
+              {!allInfluencersAccepted && (
+                <div className="flex justify-end mb-6">
+                  <GradientButton 
+                    href="/add-influencer" 
+                    label="Add influencers" 
+                    width="w-auto" 
+                    className="rounded-lg" 
+                    colors="bg-[#4094f7] hover:bg-blue-700" 
+                  />
+                </div>
+              )}
 
               {/* Influencers Table */}
               <InfluencersTable influencers={influencersData} />

@@ -1,17 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FiHelpCircle, FiChevronDown, GradientButton, InfluencerAddedModal } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
-import GradientButton from "@/components/buttons/GradientButton";
-import InfluencerAddedModal from "@/components/ui/InfluencerAddedModal";
 
 export interface InfluencerDiscovery {
   id: number;

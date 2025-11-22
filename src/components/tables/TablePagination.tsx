@@ -1,5 +1,4 @@
-import React from "react";
-import { Pagination, Box } from "@mui/material";
+import React, { Pagination, Box } from "@/imports/globalimport";
 
 interface TablePaginationProps {
   count: number;

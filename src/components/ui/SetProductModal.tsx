@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import GradientButton from "@/components/buttons/GradientButton";
-import { FiX, FiPaperclip } from "react-icons/fi";
+import React, { useState, useEffect, FiX, FiPaperclip, GradientButton } from "@/imports/globalimport";
 
 interface SetProductModalProps {
   isOpen: boolean;

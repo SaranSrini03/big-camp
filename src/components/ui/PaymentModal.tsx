@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import GradientButton from "@/components/buttons/GradientButton";
-import { FiX, FiCopy } from "react-icons/fi";
+import React, { useState, FiX, FiCopy, GradientButton } from "@/imports/globalimport";
 
 interface PaymentModalProps {
   isOpen: boolean;

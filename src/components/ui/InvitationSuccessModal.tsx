@@ -1,5 +1,4 @@
-import React from "react";
-import { FiCheck } from "react-icons/fi";
+import React, { FiCheck } from "@/imports/globalimport";
 
 interface InvitationSuccessModalProps {
   isOpen: boolean;

@@ -1,18 +1,5 @@
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Checkbox,
-} from "@mui/material";
-import { FiHelpCircle, FiChevronDown } from "react-icons/fi";
+import React, { useState, useMemo, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, FiHelpCircle, FiChevronDown, GradientButton, SetBudgetModal, BudgetFormData } from "@/imports/globalimport";
 import TablePagination from "./TablePagination";
-import GradientButton from "@/components/buttons/GradientButton";
-import SetBudgetModal, { BudgetFormData } from "@/components/ui/SetBudgetModal";
 
 export interface BudgetAllocation {
   id: number;
