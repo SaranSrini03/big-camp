@@ -26,14 +26,14 @@ export const influencersData: Influencer[] = [
   { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
   { id: 2, name: "Phoenix Baker", username: "@phoenix", initials: "PB", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
   { id: 3, name: "Lana Steiner", username: "@lana", initials: "LS", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
-  { id: 4, name: "Demi Wilkinson", username: "@demi", initials: "DW", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 4, name: "Demi Wilkinson", username: "@demi", initials: "DW", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
   { id: 5, name: "Candice Wu", username: "@candice", initials: "CW", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
-  { id: 6, name: "Natali Craig", username: "@natali", initials: "NC", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 6, name: "Natali Craig", username: "@natali", initials: "NC", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
   { id: 7, name: "Drew Cano", username: "@drew", initials: "DC", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
-  { id: 8, name: "Orlando Diggs", username: "@orlando", initials: "OD", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 8, name: "Orlando Diggs", username: "@orlando", initials: "OD", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
   { id: 9, name: "Andi Lane", username: "@andi", initials: "AL", role: "Product Designer", invitation: "Send invitation", status: "Accepted" },
-  { id: 10, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
-  { id: 11, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Pending" },
+  { id: 10, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
+  { id: 11, name: "Kate Morrison", username: "@kate", initials: "KM", role: "Frontend Developer", invitation: "Invited", status: "Accepted" },
 ];
 
 // Product Content data
@@ -121,6 +121,33 @@ export const paymentManagementCards: SummaryCard[] = [
   { id: "3", value: "12K", label: "Eng. Commissions" },
   { id: "4", value: "110", label: "Paid" },
   { id: "5", value: "1K", label: "Balance" },
+];
+
+// Influencer Discovery data (for add-influencer page)
+export interface InfluencerDiscovery {
+  id: number;
+  name: string;
+  username: string;
+  initials: string;
+  matchPercentage: number;
+  location: string;
+  niches: string[];
+  additionalNiches: number;
+}
+
+export const influencerDiscoveryData: InfluencerDiscovery[] = [
+  { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", matchPercentage: 70, location: "Bangalore", niches: ["Fashion", "Model", "Food"], additionalNiches: 4 },
+  { id: 2, name: "Phoenix Baker", username: "@phoenix", initials: "PB", matchPercentage: 100, location: "Bangalore", niches: ["Model", "Product", "Beauty"], additionalNiches: 4 },
+  { id: 3, name: "Lana Steiner", username: "@lana", initials: "LS", matchPercentage: 80, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 4, name: "Demi Wilkinson", username: "@demi", initials: "DW", matchPercentage: 70, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 5, name: "Candice Wu", username: "@candice", initials: "CW", matchPercentage: 80, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 6, name: "Natali Craig", username: "@natali", initials: "NC", matchPercentage: 70, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 7, name: "Drew Cano", username: "@drew", initials: "DC", matchPercentage: 75, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 8, name: "Orlando Diggs", username: "@orlando", initials: "OD", matchPercentage: 80, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 9, name: "Andi Lane", username: "@andi", initials: "AL", matchPercentage: 100, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 10, name: "Kate Morrison", username: "@kate", initials: "KM", matchPercentage: 100, location: "Bangalore", niches: ["Design", "Product", "Marketing"], additionalNiches: 4 },
+  { id: 11, name: "Alice Johnson", username: "@alice", initials: "AJ", matchPercentage: 85, location: "Bangalore", niches: ["Fashion", "Beauty", "Lifestyle"], additionalNiches: 4 },
+  { id: 12, name: "Bob Smith", username: "@bob", initials: "BS", matchPercentage: 75, location: "Bangalore", niches: ["Tech", "Gaming", "Entertainment"], additionalNiches: 4 },
 ];
 
 // Section titles mapping

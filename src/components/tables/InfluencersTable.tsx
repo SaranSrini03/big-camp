@@ -12,6 +12,7 @@ import {
 import { FiHelpCircle, FiChevronDown, FiTrash2 } from "react-icons/fi";
 import TablePagination from "./TablePagination";
 import InvitationSuccessModal from "@/components/ui/InvitationSuccessModal";
+import GradientButton from "@/components/buttons/GradientButton";
 
 export interface Influencer {
   id: number;
@@ -20,7 +21,13 @@ export interface Influencer {
   initials: string;
   role: string;
   invitation: "Send invitation" | "Invited";
-  status: "Accepted" | "Pending";
+  status: "Accepted" | "Pending" | "Ongoing";
+  // Campaign metrics (shown after campaign starts)
+  audience?: string;
+  engRate?: string;
+  totalReach?: string;
+  earned?: number;
+  posts?: number;
 }
 
 interface InfluencersTableProps {
@@ -39,16 +46,24 @@ export default function InfluencersTable({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedInfluencer, setSelectedInfluencer] = useState<Influencer | null>(null);
   const [invitedInfluencers, setInvitedInfluencers] = useState<Set<number>>(new Set());
+  const [campaignStarted, setCampaignStarted] = useState(false);
 
-  // Merge local invitation status with props
+  // Merge local invitation status with props and campaign status
   const influencersWithStatus = useMemo(() => {
     return influencers.map((influencer) => ({
       ...influencer,
       invitation: invitedInfluencers.has(influencer.id)
         ? "Invited"
         : influencer.invitation,
+      status: campaignStarted ? "Ongoing" : influencer.status,
+      // Default campaign metrics if not provided
+      audience: influencer.audience || (campaignStarted ? "1M" : undefined),
+      engRate: influencer.engRate || (campaignStarted ? "4.5-11%" : undefined),
+      totalReach: influencer.totalReach || (campaignStarted ? "5M" : undefined),
+      earned: influencer.earned || (campaignStarted ? 5000 : undefined),
+      posts: influencer.posts || (campaignStarted ? 15 : undefined),
     }));
-  }, [influencers, invitedInfluencers]);
+  }, [influencers, invitedInfluencers, campaignStarted]);
 
   const getInitialsColor = (initials: string) => {
     const colors = [
@@ -97,6 +112,19 @@ export default function InfluencersTable({
     handleModalClose();
   };
 
+  // Check if all influencers have status "Accepted" (but not "Ongoing")
+  const allAccepted = useMemo(() => {
+    return influencersWithStatus.length > 0 && 
+           influencersWithStatus.every(influencer => 
+             influencer.status === "Accepted" && !campaignStarted
+           );
+  }, [influencersWithStatus, campaignStarted]);
+
+  const handleStartCampaign = () => {
+    setCampaignStarted(true);
+    console.log("Campaign started!");
+  };
+
   return (
     <div>
       <TableContainer component={Paper} sx={{ boxShadow: "none", border: "none", padding: "16px" }}>
@@ -128,35 +156,135 @@ export default function InfluencersTable({
               >
                 Name
               </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                  Role
-                  <FiHelpCircle className="text-gray-400" size={14} />
-                </div>
-              </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              >
-                Invitation
-              </TableCell>
+              {campaignStarted ? (
+                <>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Audience
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      ENG Rate
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Total reach
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Links
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Earned
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    Posts
+                  </TableCell>
+                </>
+              ) : (
+                <>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      Role
+                      <FiHelpCircle className="text-gray-400" size={14} />
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      fontWeight: 500,
+                      color: "#374151",
+                      borderBottom: "1px solid #e5e7eb",
+                      backgroundColor: "#f9fafc",
+                    }}
+                  >
+                    Invitation
+                  </TableCell>
+                </>
+              )}
               <TableCell
                 sx={{
                   py: 2,
@@ -173,17 +301,19 @@ export default function InfluencersTable({
                   <FiChevronDown className="text-gray-400" size={14} />
                 </div>
               </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  fontWeight: 500,
-                  color: "#374151",
-                  borderBottom: "1px solid #e5e7eb",
-                  backgroundColor: "#f9fafc",
-                }}
-              ></TableCell>
+              {!campaignStarted && (
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    fontWeight: 500,
+                    color: "#374151",
+                    borderBottom: "1px solid #e5e7eb",
+                    backgroundColor: "#f9fafc",
+                  }}
+                ></TableCell>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -234,58 +364,148 @@ export default function InfluencersTable({
                   </div>
                 </div>
               </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  color: "#111827",
-                  borderBottom: "1px solid #f3f4f6",
-                }}
-              >
-                {influencer.role}
-              </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  borderBottom: "1px solid #f3f4f6",
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "4px 12px",
-                    borderRadius: "12px",
-                    backgroundColor: "#f3e8ff",
-                    cursor: influencer.invitation === "Send invitation" ? "pointer" : "default",
-                    pointerEvents: influencer.invitation === "Invited" ? "none" : "auto",
-                    opacity: influencer.invitation === "Invited" ? 0.7 : 1,
-                  }}
-                  onClick={() => handleInvitationClick(influencer)}
-                >
-                  <span
-                    style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      backgroundColor: "#9333ea",
-                    }}
-                  />
-                  <span
-                    style={{
-                      color: "#6b21a8",
-                      fontSize: "0.75rem",
-                      fontWeight: 500,
+              {campaignStarted ? (
+                <>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
                     }}
                   >
-                    {influencer.invitation}
-                  </span>
-                </div>
-              </TableCell>
+                    {influencer.audience || "-"}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    {influencer.engRate || "-"}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    {influencer.totalReach || "-"}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    <button
+                      className="px-3 py-1 text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+                    >
+                      Links
+                    </button>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    {influencer.earned?.toLocaleString() || "-"}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    {influencer.posts || "-"}
+                  </TableCell>
+                </>
+              ) : (
+                <>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      color: "#111827",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    {influencer.role}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "4px 12px",
+                        borderRadius: "12px",
+                        backgroundColor: "#f3e8ff",
+                        cursor: influencer.invitation === "Send invitation" ? "pointer" : "default",
+                        pointerEvents: influencer.invitation === "Invited" ? "none" : "auto",
+                        opacity: influencer.invitation === "Invited" ? 0.7 : 1,
+                      }}
+                      onClick={() => handleInvitationClick(influencer)}
+                    >
+                      <span
+                        style={{
+                          width: "6px",
+                          height: "6px",
+                          borderRadius: "50%",
+                          backgroundColor: "#9333ea",
+                        }}
+                      />
+                      <span
+                        style={{
+                          color: "#6b21a8",
+                          fontSize: "0.75rem",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {influencer.invitation}
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      py: 2,
+                      px: 2,
+                      fontSize: "0.8125rem",
+                      borderBottom: "1px solid #f3f4f6",
+                    }}
+                  >
+                    <FiTrash2
+                      onClick={() => onDelete?.(influencer.id)}
+                      className="text-gray-400 hover:text-red-500 cursor-pointer"
+                      size={18}
+                    />
+                  </TableCell>
+                </>
+              )}
               <TableCell
                 sx={{
                   py: 2,
@@ -301,7 +521,7 @@ export default function InfluencersTable({
                     gap: "6px",
                     padding: "4px 12px",
                     borderRadius: "12px",
-                    backgroundColor: "#d1fae5",
+                    backgroundColor: influencer.status === "Ongoing" ? "#d1fae5" : "#d1fae5",
                   }}
                 >
                   <span
@@ -319,29 +539,28 @@ export default function InfluencersTable({
                       fontWeight: 500,
                     }}
                   >
-                    {influencer.status}
+                    {influencer.status === "Ongoing" ? "Ongoing" : influencer.status}
                   </span>
                 </div>
-              </TableCell>
-              <TableCell
-                sx={{
-                  py: 2,
-                  px: 2,
-                  fontSize: "0.8125rem",
-                  borderBottom: "1px solid #f3f4f6",
-                }}
-              >
-                <FiTrash2
-                  onClick={() => onDelete?.(influencer.id)}
-                  className="text-gray-400 hover:text-red-500 cursor-pointer"
-                  size={18}
-                />
               </TableCell>
             </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      
+      {/* Start Campaign Button - Only show if all influencers are Accepted */}
+      {allAccepted && (
+        <div className="flex justify-end mt-4 mb-4">
+          <GradientButton
+            label="Start Campaign"
+            onClick={handleStartCampaign}
+            className="px-6 py-2 text-sm font-semibold rounded-lg"
+            colors="bg-[#4094f7] hover:bg-blue-700 text-white"
+          />
+        </div>
+      )}
+
       {influencersWithStatus.length > rowsPerPage && (
         <TablePagination
           count={influencersWithStatus.length}
@@ -350,6 +569,7 @@ export default function InfluencersTable({
           rowsPerPage={rowsPerPage}
         />
       )}
+
       <InvitationSuccessModal
         isOpen={isModalOpen}
         onClose={handleModalClose}

@@ -44,7 +44,13 @@ export default function CampaignSection() {
             <>
               {/* Button */}
               <div className="flex justify-end mb-6">
-                <GradientButton label="Add influencers" width="w-auto" className="rounded-lg" colors="bg-[#4094f7] hover:bg-blue-700" />
+                <GradientButton 
+                  href="/add-influencer" 
+                  label="Add influencers" 
+                  width="w-auto" 
+                  className="rounded-lg" 
+                  colors="bg-[#4094f7] hover:bg-blue-700" 
+                />
               </div>
 
               {/* Influencers Table */}
