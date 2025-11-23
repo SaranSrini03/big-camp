@@ -33,7 +33,7 @@ export default function TablePagination({
         count={totalPages}
         page={page}
         onChange={onChange}
-        color="primary"
+        color="standard"
         shape="rounded"
         size="medium"
         sx={{

@@ -76,14 +76,14 @@ export const reviewData: ReviewItem[] = [
 
 // Campaign Monitoring data
 export const campaignMonitoringData: CampaignMonitoring[] = [
-  { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 3, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "₹2.50", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "7.1%", roi: "7.1%" },
-  { id: 2, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 3, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 4, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 5, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 6, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 7, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
-  { id: 8, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500" },
+  { id: 1, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 3, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "₹2.50", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "7.1%", roi: "7.1%",revenue: 10000 },
+  { id: 2, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 3, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 4, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 5, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 6, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 7, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
+  { id: 8, name: "Olivia Rhye", username: "@olivia", initials: "OR", postLink: "Link", noOfPosts: 1500, audience: 1500, reach: 2500, likes: 1500, costPerEngagement: "1000", engagement: "10-15% eng - 2000", campaignSpend: 7000, conversionRate: "1500", roi: "1500",revenue: 10000 },
 ];
 
 // Campaign Monitoring Summary Cards

@@ -16,6 +16,7 @@ export interface CampaignMonitoring {
   campaignSpend: number;
   conversionRate: string;
   roi: string;
+  revenue: number;
 }
 
 interface CampaignMonitoringTableProps {
@@ -62,6 +63,7 @@ export default function CampaignMonitoringTable({
     "Campaign Spend",
     "Conversion Rate (%)",
     "ROI (%)",
+    "Revenue (%)",
   ];
 
   const paginatedData = useMemo(() => {
@@ -291,6 +293,17 @@ export default function CampaignMonitoringTable({
                   }}
                 >
                   {row.roi}
+                </TableCell>
+                <TableCell
+                  sx={{
+                    py: 2,
+                    px: 2,
+                    fontSize: "0.8125rem",
+                    color: "#111827",
+                    borderBottom: "1px solid #f3f4f6",
+                  }}
+                >
+                  {row.revenue.toLocaleString()}
                 </TableCell>
               </TableRow>
               ))}
